@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para for ceo💕</title>
+<script>
+  const nav = performance.getEntriesByType("navigation")[0];
+
+  if (nav && nav.type === "reload") {
+    window.location.replace("./index.html");
+  }
+</script>
+<style>
+  :root {
+    --wine:#4A171E;    /* gehra burgundy */
+    --cream:#E9DFC9;   /* cream */
+  }
+  html, body { margin:0; height:100%; overflow:hidden; }
+  body {
+    font-family:"Georgia","Times New Roman",serif; color:var(--cream);
+    background:
+      radial-gradient(ellipse at 50% 45%, #6a2430 0%, var(--wine) 45%, #2e0d12 100%);
+  }
+  #sparks { position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+  /* ---------- Upar wala typewriter ---------- */
+  #topText {
+    position:fixed; top:7vh; left:0; right:0; z-index:5;
+    min-height:3em; padding:0 24px; box-sizing:border-box;
+    text-align:center; font-size:clamp(18px,2.7vw,28px); line-height:1.6;
+    text-shadow:0 2px 14px rgba(0,0,0,.45);
+    white-space:pre-wrap; pointer-events:none;
+    opacity:0; transition:opacity .8s ease;
+  }
+  #topText.on { opacity:1; }
+  .cursor {
+    display:inline-block; width:2px; height:1.1em; background:var(--cream);
+    vertical-align:text-bottom; margin-left:2px; animation:blink .9s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity:0; } }
+
+  /* ---------- Questions ---------- */
+  #stage { position:fixed; inset:0; z-index:2; display:flex; align-items:center; justify-content:center; padding:24px; box-sizing:border-box; }
+  .q {
+    display:none; opacity:0; transition:opacity 1.2s ease;
+    background:var(--cream); color:var(--wine); border-radius:28px;
+    padding:40px 44px; max-width:520px; width:100%; box-sizing:border-box; text-align:center;
+    box-shadow:
+      inset 0 0 0 7px var(--cream), inset 0 0 0 8.5px rgba(74,23,30,.35),
+      0 0 60px rgba(233,223,201,.18), 0 24px 60px rgba(0,0,0,.5);
+  }
+  .q.show { opacity:1; animation:floaty 5s ease-in-out infinite; }
+  @keyframes floaty { 50% { transform:translateY(-6px); } }
+  .qtext { margin:0 0 30px; font-size:clamp(22px,4vw,32px); font-weight:normal; line-height:1.4; }
+  .opts { display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+
+  button {
+    font-family:"Segoe UI",system-ui,sans-serif; font-size:18px; cursor:pointer;
+    padding:12px 36px; border-radius:999px; border:2px solid var(--wine);
+    user-select:none; -webkit-user-select:none; touch-action:manipulation;
+    box-shadow:0 6px 16px rgba(0,0,0,.28);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  button:hover { transform:translateY(-2px) scale(1.05); box-shadow:0 10px 22px rgba(0,0,0,.35); }
+  #yes { background:var(--wine); color:var(--cream); position:relative; z-index:20; }
+  #no  { background:var(--cream); color:var(--wine); }
+  #no.fly { position:fixed; z-index:10; margin:0; transition:left .45s ease, top .45s ease, transform .2s ease, box-shadow .2s ease; }
+  .shake { animation:shake .35s; }
+  @keyframes shake { 20%{transform:translateX(-7px)} 40%{transform:translateX(7px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+  .ph { display:inline-block; }
+  
+/* Question 2 buttons */
+#yes2 {
+  background: var(--wine);
+  color: var(--cream);
+}
+
+#no2 {
+  background: var(--cream);
+  color: var(--wine);
+}
+
+#no2:disabled {
+  opacity: 1;
+  cursor: pointer;
+  transform: none;
+}
+
+/* Center image popup */
+#imagePopup {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.82);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+#imagePopup.open {
+  display: flex;
+  opacity: 1;
+}
+
+#popupImage {
+  display: block;
+  max-width: min(90vw, 500px);
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 18px;
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.5);
+  transform: scale(0.92);
+  transition: transform 0.6s ease;
+}
+
+#imagePopup.open #popupImage {
+  transform: scale(1);
+}
+
+#closePopup {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 9px 17px;
+  border: 1px solid var(--cream);
+  background: var(--wine);
+  color: var(--cream);
+  font-size: 15px;
+  z-index: 1001;
+}
+
+#closePopup:focus-visible,
+#yes2:focus-visible,
+#no2:focus-visible {
+  outline: 3px solid #fd79a8;
+  outline-offset: 4px;
+}
+
+@media (max-width: 480px) {
+  #q2 {
+    padding: 30px 22px;
+  }
+
+  #q2 .qtext {
+    font-size: 23px;
+  }
+
+  #q2 .opts {
+    gap: 12px;
+  }
+
+  #q2 button {
+    padding: 12px 28px;
+  }
+}
+
+
+/* Buddy at the same bottom-left position as index.html; hidden until No is approached */
+#q1Buddy {
+  position: fixed;
+  left: 10px;
+  bottom: 5px;
+  height: clamp(190px, 34vh, 300px);
+  aspect-ratio: 174 / 560;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+#q1Buddy.show { opacity: 1; }
+#q1Buddy img { width: 100%; height: 100%; display: block; object-fit: contain; }
+#q1Buddy .buddyBubble {
+  position: absolute;
+  left: 70%;
+  bottom: calc(100% + 24px);
+  width: 190px;
+  max-width: 55vw;
+  box-sizing: border-box;
+  background: #fff;
+  border: 3px solid #fd79a8;
+  border-radius: 30px;
+  padding: 10px 12px;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #c0392b;
+  opacity: 0;
+  transition: opacity 1s ease .35s;
+}
+#q1Buddy.show .buddyBubble { opacity: 1; }
+#buddyBubbleText {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+#buddyBubbleText.fade-out { opacity: 0; }
+#q1Buddy .buddyBubble::before,
+#q1Buddy .buddyBubble::after {
+  content: ""; position: absolute; background: #fff; border: 3px solid #fd79a8; border-radius: 50%;
+}
+#q1Buddy .buddyBubble::before { width: 12px; height: 12px; left: 8px; bottom: -18px; }
+#q1Buddy .buddyBubble::after { width: 7px; height: 7px; left: -3px; bottom: -29px; }
+@media (max-height: 600px) { #q1Buddy { height: 165px; } }
+
+</style>
+</head>
+<body>
+
+<canvas id="sparks"></canvas>
+  
+  <!-- Image popup -->
+  <div id="imagePopup" role="dialog"
+       aria-modal="true" aria-label="Image popup">
+    <button id="closePopup" type="button"
+            aria-label="Close image">✕</button>
+    <img id="popupImage" src="" alt="Reaction image">
+  </div>
+
+  <!-- Audio played only by Question 2's Yes button -->
+  <audio id="yesSound" src="./yes-sound.mp3"
+         preload="auto"></audio>
+  <audio id="noApproachSound" src="./mistri-man-jao-sound.mp3" preload="auto"></audio>
+
+
+<div id="topText"></div>
+
+<div id="stage">
+
+  <!-- QUESTION 1 -->
+  <section class="q" id="q1">
+    <h1 class="qtext">mai tumhara achha dost hu na🥰</h1>
+    <div class="opts">
+      <button id="yes">Yes</button>
+      <button id="no">No</button>
+    </div>
+  </section>
+
+  <!-- QUESTION 2 -->
+  <section class="q" id="q2">
+    <h1 class="qtext">do you ever feel like I bother you by texting you or sending you reels? 🥹❤️</h1>
+    <div class="opts" id="q2opts">
+      <button id="yes2" type="button">हाँ</button>
+      <button id="no2" type="button" disabled>ना</button>
+    </div>
+  </section>
+
+</div>
+
+
+
+<!-- Buddy stays at the bottom-left, like on index.html -->
+<div id="q1Buddy" aria-hidden="true">
+  <div class="buddyBubble"><span id="buddyBubbleText">kya hua oneee chan no ko nahi pakad paa rahi ho kya 😈🤣</span></div>
+  <picture>
+    <source srcset="./buddy.webp" type="image/webp">
+    <img src="./buddy.png" alt="Buddy character">
+  </picture>
+</div>
+
+<script>
+/* =====================================================
+   SETTINGS  -  yahan se text aur timing badal
+   ===================================================== */
+const INTRO_TEXT = 'Kuch dikhane se pehle, tumhe mere kuch sawalo ke jawab dene honge 😌';
+
+// No ke paas jaane par upar ye text ek-ek karke aate hain (phir loop)
+const NO_MESSAGES = [
+  'yaa allah ........ dekh rahe ho aap iss ladki ko 😒',
+  'arrey arrey nahi maan rahi ho tum ..... jayda shaani ban rahi ho 🤣',
+  'no kyu kar rahi hai mai achha dost nahi hu 😭🥹',
+  'abb yeh baat hogayi hai ..........😒',
+  'kyu peeche pad rahi hai uske nahi aayega haat mai laadli 😈',
+  'arrey arrey arrey re re re maaaaaaaaanjjjaaaaaaaa',
+  'No dabane se sach thodi badal jayega madam 😏',
+  'mehak ji ka attitude toh dekho zara 😒',
+  'itni bhi kya dushmani hai mujhse 😭'
+];
+
+const TYPE_SPEED     = 55;      // ms per letter (kam = tez)
+const START_DELAY    = 1000;    // page khulne ke kitni der baad typewriter shuru
+const INTRO_HOLD     = 5000;    // intro text poora hone ke kitni der baad gayab
+const MSG_HOLD       = 3000;    // No wale text poora hone ke kitni der baad gayab
+const YES_UNLOCK     = 25000;   // pehli baar No ke paas jaane ke kitni der baad Yes kaam kare
+const NEAR_DISTANCE  = 90;      // cursor No ke kitne paas aaye to No kudke bhaage (px)
+
+/* =====================================================
+   HELPERS
+   ===================================================== */
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const topEl = $('topText');
+let finished = false;           // Yes dabne ke baad true
+
+/* Typewriter (upar wala text) */
+async function typeMsg(text) {
+  topEl.textContent = '';
+  const cur = document.createElement('span');
+  cur.className = 'cursor';
+  topEl.appendChild(cur);
+  topEl.classList.add('on');
+  for (const ch of Array.from(text)) {        // emoji ko sahi se todta hai
+    if (finished) return;
+    cur.before(document.createTextNode(ch));
+    await sleep(TYPE_SPEED + ('.,'.includes(ch) ? 220 : 0));
+  }
+}
+async function vanish() {                      // text fade-out hoke gayab
+  topEl.classList.remove('on');
+  await sleep(800);
+  topEl.textContent = '';
+}
+
+/* Question fade-in / fade-out */
+function showQ(q) {
+  q.style.display = 'block';
+  void q.offsetWidth;                          // browser ko display apply karne do
+  q.classList.add('show');
+}
+async function hideQ(q) {
+  q.classList.remove('show');
+  await sleep(1200);
+  q.style.display = 'none';
+}
+
+/* =====================================================
+   NO BUTTON  -  cursor paas aaye to poori screen pe kahin bhi kud jata hai
+   ===================================================== */
+const yes = $('yes'), no = $('no');
+const noApproachSound = $('noApproachSound');
+const SOUND_REPEAT_GAP = 8000;
+let lastNoSoundTime = -Infinity;
+function playNoApproachSound() {
+  if (finished || Date.now() - lastNoSoundTime < SOUND_REPEAT_GAP) return;
+  lastNoSoundTime = Date.now();
+  noApproachSound.currentTime = 0;
+  noApproachSound.play().catch(() => {});
+}
+let started = false, yesUnlocked = false, busy = false, msgIndex = 0, lastJump = 0;
+let mouseX = -999, mouseY = -999;
+
+function randomSpot() {
+  const w = no.offsetWidth, h = no.offsetHeight, m = 12;
+  const minTop = Math.min(120, innerHeight - h - m);     // upar text ke liye jagah
+  const yr = yes.getBoundingClientRect(), card = $('q1').getBoundingClientRect(), pad = 24;
+  let x, y;
+  for (let k = 0; k < 50; k++) {
+    x = m + Math.random() * Math.max(1, innerWidth  - w - 2 * m);
+    y = minTop + Math.random() * Math.max(1, innerHeight - h - minTop - m);
+    const hit = rc => x < rc.right + pad && x + w > rc.left - pad && y < rc.bottom + pad && y + h > rc.top - pad;
+    const nearCur = Math.hypot(x + w / 2 - mouseX, y + h / 2 - mouseY) < 200;
+    if (!hit(yr) && !hit(card) && !nearCur) break;   // Yes aur question card se bachke
+  }
+  return { x, y };
+}
+
+function jump() {
+  if (!no.classList.contains('fly')) {         // pehli baar: button ko screen pe azaad karo
+    const r = no.getBoundingClientRect();
+    const ph = document.createElement('span'); // asli jagah khaali rakho taaki Yes hile nahi
+    ph.className = 'ph'; ph.style.width = r.width + 'px'; ph.style.height = r.height + 'px';
+    no.before(ph);
+    no.style.left = r.left + 'px'; no.style.top = r.top + 'px';
+    no.classList.add('fly');
+    document.body.appendChild(no);
+    void no.offsetWidth;
+  }
+  const p = randomSpot();
+  no.style.left = p.x + 'px'; no.style.top = p.y + 'px';
+}
+
+async function triggerMessage() {              // upar ka text lagataar loop mein
+  if (busy || finished) return;
+  busy = true;
+  while (!finished) {
+    const msg = NO_MESSAGES[msgIndex++ % NO_MESSAGES.length];
+    await typeMsg(msg);
+    if (finished) break;
+    await sleep(MSG_HOLD);
+    if (finished) break;
+    await vanish();
+  }
+  busy = false;
+}
+
+function onApproach() {
+  if (finished) return;
+  playNoApproachSound();
+  const now = Date.now();
+  if (now - lastJump < 350) return;            // bahut jaldi-jaldi na kude
+  lastJump = now;
+  if (!started) {                              // pehli baar: 20 second ka timer
+    started = true;
+    setTimeout(() => { yesUnlocked = true; }, YES_UNLOCK);
+  }
+  jump();
+  triggerMessage();
+}
+
+/* Buddy fade-in when the cursor first approaches Question 1's No button */
+let q1BuddyShown = false;
+const buddyBubbleText = $('buddyBubbleText');
+const BUDDY_MESSAGES = [
+  'kya hua oneee chan no ko nahi pakad paa rahi ho kya 😈🤣',
+  'nah maan re chori tu code bhi jaane hai ki mai achha dost hu 😭',
+  'Astagfirullah 😠',
+  'madam ka confidence toh dekho 😏',
+  'ek chhota sa sawaal aur itna drama 😭😂'
+];
+let buddyMessageTimer = null;
+function startBuddyMessages() {
+  if (buddyMessageTimer !== null) return;
+  let buddyMessageIndex = 0;
+  const showNextBuddyMessage = () => {
+    if (finished || !$('q1Buddy').classList.contains('show')) {
+      buddyMessageTimer = null;
+      return;
+    }
+    buddyBubbleText.classList.add('fade-out');
+    setTimeout(() => {
+      if (finished || !$('q1Buddy').classList.contains('show')) {
+        buddyMessageTimer = null;
+        return;
+      }
+      buddyMessageIndex = (buddyMessageIndex + 1) % BUDDY_MESSAGES.length;
+      buddyBubbleText.textContent = BUDDY_MESSAGES[buddyMessageIndex];
+      buddyBubbleText.classList.remove('fade-out');
+      buddyMessageTimer = setTimeout(showNextBuddyMessage, 7000);
+    }, 600);
+  };
+  buddyMessageTimer = setTimeout(showNextBuddyMessage, 7000);
+}
+document.addEventListener('pointermove', e => {
+  if (q1BuddyShown || finished || !$('q1').classList.contains('show')) return;
+  const r = $('no').getBoundingClientRect();
+  const dx = Math.max(r.left - e.clientX, 0, e.clientX - r.right);
+  const dy = Math.max(r.top - e.clientY, 0, e.clientY - r.bottom);
+ if (Math.hypot(dx, dy) < NEAR_DISTANCE) {
+    q1BuddyShown = true;
+    setTimeout(() => {
+        if ($('q1').classList.contains('show') && !finished) {
+            $('q1Buddy').classList.add('show');
+            startBuddyMessages();
+        }
+    }, 6000);
+}
+}, true);
+
+/* cursor paas aaya? */
+document.addEventListener('pointermove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  if (finished) return;
+  const r = no.getBoundingClientRect();
+  const dx = Math.max(r.left - mouseX, 0, mouseX - r.right);
+  const dy = Math.max(r.top  - mouseY, 0, mouseY - r.bottom);
+  if (Math.hypot(dx, dy) < NEAR_DISTANCE) onApproach();
+});
+/* mobile touch / click pe bhi kud jaye */
+no.addEventListener('pointerdown', e => { e.preventDefault(); onApproach(); });
+no.addEventListener('click', e => { e.preventDefault(); onApproach(); });
+
+/* =====================================================
+   YES BUTTON
+   ===================================================== */
+yes.addEventListener('click', async () => {
+  if (!yesUnlocked || finished) {              // abhi kaam nahi karega
+    yes.classList.remove('shake'); void yes.offsetWidth; yes.classList.add('shake');
+    return;
+  }
+  finished = true;
+  no.remove();
+  topEl.classList.remove('on');
+  await hideQ($('q1'));
+  $('q1Buddy').classList.remove('show');
+  topEl.textContent = '';
+  showQ($('q2'));                              // Question 2 fade-in
+});
+
+/* =====================================================
+   SPARKLES  -  peeche halke cream dot upar udte hain
+   ===================================================== */
+(function () {
+  const cv = $('sparks'), g = cv.getContext('2d');
+  let W, H, dots = [];
+  function size() {
+    W = cv.width = innerWidth; H = cv.height = innerHeight;
+    const n = Math.max(24, Math.min(70, Math.round(W * H / 18000)));
+    dots = Array.from({ length: n }, () => mk(true));
+  }
+  function mk(first) {
+    return { x: Math.random() * W, y: first ? Math.random() * H : H + 10,
+             r: 0.8 + Math.random() * 2.2, v: 0.15 + Math.random() * 0.45,
+             drift: Math.random() * 6.28, tw: Math.random() * 6.28 };
+  }
+  function frame(t) {
+    g.clearRect(0, 0, W, H);
+    for (const d of dots) {
+      d.y -= d.v; d.drift += 0.01; d.x += Math.sin(d.drift) * 0.3; d.tw += 0.03;
+      if (d.y < -10) Object.assign(d, mk(false));
+      g.globalAlpha = 0.15 + (Math.sin(d.tw) * 0.5 + 0.5) * 0.45;
+      g.fillStyle = '#E9DFC9';
+      g.shadowColor = '#E9DFC9'; g.shadowBlur = 8;
+      g.beginPath(); g.arc(d.x, d.y, d.r, 0, 6.283); g.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize', size);
+  size(); requestAnimationFrame(frame);
+})();
+
+/* =====================================================
+   SHURUAT:  typewriter, phir Question 1
+   ===================================================== */
+(async function start() {
+  await sleep(START_DELAY);
+  await typeMsg(INTRO_TEXT);
+  await sleep(INTRO_HOLD);
+  await vanish();
+  showQ($('q1'));
+})();
+
+
+/* =====================================================
+   QUESTION 2: SOUND + IMAGES
+   Media files live beside page2.html, so use relative paths.
+   ===================================================== */
+const yes2 = document.getElementById('yes2');
+const no2 = document.getElementById('no2');
+const popup = document.getElementById('imagePopup');
+const popupImage = document.getElementById('popupImage');
+const closePopup = document.getElementById('closePopup');
+const yesSound = document.getElementById('yesSound');
+
+let q2YesClicked = false;
+let popupOpen = false;
+let q2Timer = null;
+let popupCloseTimer = null;
+
+function showPopup(imagePath) {
+  if (popupCloseTimer !== null) {
+    clearTimeout(popupCloseTimer);
+    popupCloseTimer = null;
+  }
+  popupImage.src = imagePath;
+  popup.style.display = 'flex';
+  void popup.offsetWidth;
+  popup.classList.add('open');
+  popupOpen = true;
+}
+
+function hidePopup() {
+  popup.classList.remove('open');
+  if (popupCloseTimer !== null) clearTimeout(popupCloseTimer);
+  popupCloseTimer = setTimeout(() => {
+    popup.style.display = 'none';
+    popupImage.src = '';
+    popupOpen = false;
+    popupCloseTimer = null;
+  }, 650);
+}
+
+yes2.addEventListener('click', async () => {
+  // Every click restarts the sound and the 8-second Image 1 display.
+  q2YesClicked = true;
+  no2.disabled = true;
+
+  if (q2Timer !== null) {
+    clearTimeout(q2Timer);
+    q2Timer = null;
+  }
+
+  yesSound.pause();
+  yesSound.currentTime = 0;
+
+  try {
+    await yesSound.play();
+  } catch (error) {
+    console.warn('Audio could not play:', error);
+  }
+
+  showPopup('./Anime%20Mad%20GIF.gif');
+
+  q2Timer = setTimeout(() => {
+    no2.disabled = false;
+    hidePopup();
+    q2Timer = null;
+  }, 8000);
+});
+
+no2.addEventListener('click', () => {
+  if (!q2YesClicked || no2.disabled) return;
+  showPopup('./image2.jpg');
+});
+
+function closePopupManually() {
+  if (q2Timer !== null) {
+    clearTimeout(q2Timer);
+    q2Timer = null;
+    no2.disabled = false;
+  }
+  hidePopup();
+}
+
+closePopup.addEventListener('click', closePopupManually);
+popup.addEventListener('click', (event) => {
+  if (event.target === popup) closePopupManually();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && popupOpen) closePopupManually();
+});
+
+</script>
+</body>
+</html>
